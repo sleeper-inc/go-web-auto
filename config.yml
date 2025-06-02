@@ -1,0 +1,4 @@
+browser:
+  headless: true
+  timeout: 3
+  browser_path: ""
