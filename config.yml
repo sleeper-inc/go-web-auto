@@ -1,6 +1,6 @@
 rod:
-  headless: true  #Run browser invisibly
-  timeout: 3 #Global timeout time
+  headless: false  #Run browser invisibly
+  timeout: 300 #Global timeout time
 
 browser:
   browser_path: "" #Custom Chrome path
