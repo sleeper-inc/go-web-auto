@@ -3,15 +3,18 @@ package main
 import (
 	"github.com/cucumber/godog"
 	"github.com/cucumber/godog/colors"
+	"github.com/godogx/allure"
 	"os"
 	"testing"
 	"web-auto-go-framework/steps"
 )
 
 func Test(t *testing.T) {
+	allure.RegisterFormatter()
+
 	opts := godog.Options{
 		Output:   colors.Colored(os.Stdout),
-		Format:   "pretty",
+		Format:   "allure",
 		Paths:    []string{"features"},
 		TestingT: t, // required `go test` will work
 		Tags:     os.Getenv("TAGS"),
