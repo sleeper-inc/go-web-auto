@@ -1,4 +1,11 @@
+rod:
+  headless: true  #Run browser invisibly
+  timeout: 3 #Global timeout time
+
 browser:
-  headless: true
-  timeout: 3
-  browser_path: ""
+  browser_path: "" #Custom Chrome path
+  viewport: "1920,1080" #Window size (width,height)
+
+network:
+  throttle: "4G" #Network configuration
+

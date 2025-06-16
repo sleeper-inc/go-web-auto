@@ -59,14 +59,14 @@ func InitializeScenario(ctx *godog.ScenarioContext) {
 		if cfg.Browser.BrowserPath != "" {
 			l.Bin(cfg.Browser.BrowserPath)
 		}
-		l.Headless(cfg.Browser.Headless)
+		l.Headless(cfg.Rod.Headless)
 
 		url := l.MustLaunch()
 
 		browser := rod.New().ControlURL(url).MustConnect()
 
 		e = &engine.Action{
-			Page:    browser.Timeout(cfg.Browser.TimeoutDuration()).MustPage("about:blank"),
+			Page:    browser.Timeout(cfg.Rod.TimeoutDuration()).MustPage("about:blank"),
 			Locator: engine.NewLocator(),
 		}
 		return ctx, nil
