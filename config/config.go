@@ -6,29 +6,36 @@ import (
 	"time"
 )
 
+type RodConfig struct {
+	Headless bool `yaml:"headless"`
+	Timeout  int  `yaml:"timeout"`
+}
+
 type BrowserConfig struct {
-	Headless    bool   `yaml:"headless"`
-	Timeout     int    `yaml:"timeout"`
 	BrowserPath string `yaml:"browser_path"`
+	Viewport    string `yaml:"viewport"`
+}
+
+type NetworkConfig struct {
+	Throttle string `yaml:"throttle"`
 }
 
 type Config struct {
+	Rod     RodConfig     `yaml:"rod"`
 	Browser BrowserConfig `yaml:"browser"`
+	Network NetworkConfig `yaml:"network"`
 }
 
 func LoadConfig(path string) (*Config, error) {
-	b, err := os.ReadFile(path)
+	data, err := os.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}
-
 	var cfg Config
-	if err := yaml.Unmarshal(b, &cfg); err != nil {
-		return nil, err
-	}
-	return &cfg, nil
+	err = yaml.Unmarshal(data, &cfg)
+	return &cfg, err
 }
 
-func (c *BrowserConfig) TimeoutDuration() time.Duration {
+func (c *RodConfig) TimeoutDuration() time.Duration {
 	return time.Duration(c.Timeout) * time.Second
 }
