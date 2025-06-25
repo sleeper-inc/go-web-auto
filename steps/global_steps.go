@@ -105,6 +105,14 @@ func scrollInDirection(direction, timeStr string) error {
 	return e.ScrollInDirection(direction, times)
 }
 
+func clickDropdown(option string, locator string) error {
+	return e.ClickDropdown(locator, option)
+}
+
+func dragAndDrop(locatorFrom string, locatorTo string) error {
+	return e.DragAndDrop(locatorFrom, locatorTo)
+}
+
 func InitializeScenario(ctx *godog.ScenarioContext) {
 	var err error
 	cfg, err = config.LoadConfig("config.yml")
@@ -144,4 +152,6 @@ func InitializeScenario(ctx *godog.ScenarioContext) {
 	ctx.Step(`^(?:I |i |User |user |Client |client )?hover "([^"]*)"$`, hover)
 	ctx.Step(`^(?:I |i |User |user |Client |client )?scroll to element "([^"]*)"$`, scrollToElement)
 	ctx.Step(`^(?:I |i |User |user |Client |client )?scroll (up|down|left|right)(?: "([^"]*)" times)?$`, scrollInDirection)
+	ctx.Step(`^(?:I |i |User |user |Client |client )?pick "([^"]*)" from "([^"]*)"$`, clickDropdown)
+	ctx.Step(`^(?:I |i |User |user |Client |client )?drag "([^"]*)" to "([^"]*)"$`, dragAndDrop)
 }

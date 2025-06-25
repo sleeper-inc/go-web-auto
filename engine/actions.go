@@ -223,3 +223,46 @@ func (e *Action) ScrollInDirection(direction string, times int) error {
 }
 
 // --- END MOUSE & SCROLL ACTIONS ---
+
+func (e *Action) ClickDropdown(locator string, option string) error {
+
+	sel, _ := e.Locator.Get(locator)
+	options := e.Page.MustElement(sel).MustElements("option")
+
+	found := false
+	for _, opt := range options {
+		text := opt.MustText()
+		if text == option {
+			found = true
+		}
+	}
+
+	if !found {
+		return fmt.Errorf("option with text %q not found in dropdown %q", option, locator)
+	}
+
+	e.Page.MustElement(sel).MustVisible()
+	e.Page.MustElement(sel).MustSelect(option)
+	return nil
+}
+
+func (e *Action) DragAndDrop(locatorFrom string, locatorTo string) error {
+	selectorFrom, _ := e.Locator.Get(locatorFrom)
+	selectorTo, _ := e.Locator.Get(locatorTo)
+
+	e.Page.MustElement(selectorFrom).MustWaitVisible()
+	e.Page.MustElement(selectorTo).MustWaitVisible()
+
+	source := e.Page.MustElement(selectorFrom)
+	target := e.Page.MustElement(selectorTo)
+
+	from := source.MustShape().OnePointInside()
+	to := target.MustShape().OnePointInside()
+
+	e.Page.Mouse.MustMoveTo(from.X, from.Y)
+	e.Page.Mouse.MustDown("left")
+	e.Page.Mouse.MustMoveTo(to.X, to.Y)
+	e.Page.Mouse.MustUp("left")
+
+	return nil
+}
